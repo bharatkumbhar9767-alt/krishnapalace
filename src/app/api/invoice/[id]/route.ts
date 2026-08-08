@@ -65,8 +65,8 @@ export async function GET(
       <div class="details">
         <div class="box">
           <h3>Billed To:</h3>
-          <p><strong>Name:</strong> ${booking.user.name}</p>
-          <p><strong>Email:</strong> ${booking.user.email}</p>
+          <p><strong>Name:</strong> ${booking.user?.name || booking.guestName}</p>
+          <p><strong>Email:</strong> ${booking.user?.email || booking.guestEmail}</p>
         </div>
         <div class="box">
           <h3>Invoice Details:</h3>
