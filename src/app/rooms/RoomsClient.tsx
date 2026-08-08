@@ -78,7 +78,7 @@ export default function RoomsClient({ initialRooms }: { initialRooms: any[] }) {
           <div className="space-y-4 pt-6 border-t mt-6">
             <h4 className="font-bold text-gray-800">Collections</h4>
             <div className="space-y-2">
-              {["Sanitized b4 ur eyes", "OYO Welcomes Couples", "OYO Premium"].map(col => (
+              {["Sanitized b4 ur eyes", "Couples Welcome", "Premium"].map(col => (
                 <label key={col} className="flex items-center gap-3 cursor-pointer">
                   <input type="checkbox" className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary" />
                   <span className="text-gray-700 text-sm">{col}</span>
@@ -108,7 +108,7 @@ export default function RoomsClient({ initialRooms }: { initialRooms: any[] }) {
       {/* Right Content Area (Rooms List) */}
       <main className="flex-1 space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">{rooms.length} OYOs in Krishna Palace</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{rooms.length} Rooms in Krishna Palace</h1>
           <select 
             onChange={handleSort}
             className="border border-gray-300 bg-white rounded-md px-3 py-1.5 text-sm font-medium outline-none"
@@ -142,7 +142,7 @@ export default function RoomsClient({ initialRooms }: { initialRooms: any[] }) {
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-r-md uppercase tracking-wider">
-                      Oyo Premium
+                      Premium
                     </div>
                   </div>
                   
@@ -155,7 +155,7 @@ export default function RoomsClient({ initialRooms }: { initialRooms: any[] }) {
                             {room.category.name} - {room.roomNumber}
                           </h3>
                           <p className="text-sm text-gray-500 mt-1 flex items-center gap-1 line-clamp-1">
-                            <MapPin className="w-3.5 h-3.5" /> Krishna Palace, Mumbai
+                            <MapPin className="w-3.5 h-3.5" /> Krishna Palace, Dehuroad, Pune
                           </p>
                         </div>
                         <div className="bg-[#1ab64f] text-white px-2 py-1 rounded text-sm font-bold flex items-center gap-1 shrink-0">
@@ -198,7 +198,8 @@ export default function RoomsClient({ initialRooms }: { initialRooms: any[] }) {
                   </div>
                 </div>
               );
-            })}
+            })
+          )}
           </div>
         </main>
       </div>

@@ -29,7 +29,7 @@ export default async function RoomsPage() {
           <div className="flex flex-col sm:flex-row items-center gap-4 text-sm font-medium">
             <span className="text-gray-400">Showing results for:</span>
             <span className="bg-gray-800 px-3 py-1.5 rounded-full flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-primary" /> Krishna Palace, Mumbai
+              <MapPin className="w-4 h-4 text-primary" /> Krishna Palace, Dehuroad, Pune
             </span>
             <span className="bg-gray-800 px-3 py-1.5 rounded-full">18 Jan - 19 Jan</span>
             <span className="bg-gray-800 px-3 py-1.5 rounded-full">1 Room, 2 Guests</span>

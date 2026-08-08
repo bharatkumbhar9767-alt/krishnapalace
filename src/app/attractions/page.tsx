@@ -4,10 +4,10 @@ export const metadata = {
 };
 
 const attractions = [
-  { name: "Gateway of India", distance: "5.2 km", desc: "Iconic arch monument built in the early 20th century." },
-  { name: "Marine Drive", distance: "3.8 km", desc: "A 3.6-kilometre-long Boulevard in South Mumbai." },
-  { name: "Chhatrapati Shivaji Maharaj Terminus", distance: "4.5 km", desc: "Historic railway station and a UNESCO World Heritage Site." },
-  { name: "Elephanta Caves", distance: "12 km (via ferry)", desc: "A network of sculpted caves located on Elephanta Island." },
+  { name: "Shri Sant Tukaram Maharaj Gatha Mandir", distance: "2.1 km", desc: "A magnificent temple dedicated to the great saint Tukaram Maharaj." },
+  { name: "MCA International Stadium", distance: "4.5 km", desc: "Famous cricket stadium located in Gahunje, near Dehu Road." },
+  { name: "Appu Ghar (Nigdi)", distance: "8.2 km", desc: "A popular amusement park for families and kids." },
+  { name: "Bhakti Shakti Circle", distance: "7.0 km", desc: "An iconic monument depicting Chhatrapati Shivaji Maharaj and Sant Tukaram." },
 ];
 
 export default function AttractionsPage() {
@@ -41,7 +41,7 @@ export default function AttractionsPage() {
         <div className="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
           <div className="aspect-square md:aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 relative">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120663.6338148817!2d72.7876882200445!3d19.075480792501096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1715421598218!5m2!1sen!2sin" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121013.91850125791!2d73.68417578330138!3d18.729115197825384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b6f4e64811ed%3A0xcb17afcf63897d2e!2sDehu%20Road%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1715421598218!5m2!1sen!2sin" 
               className="absolute inset-0 w-full h-full border-0"
               allowFullScreen={true}
               loading="lazy" 

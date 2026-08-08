@@ -52,7 +52,7 @@ export default async function Home() {
         <div className="relative z-10 container px-4 md:px-6">
           <div className="max-w-4xl mx-auto space-y-6">
             <h1 className="text-3xl md:text-5xl font-bold text-white text-center tracking-tight">
-              Over 157,000 hotels and homes across 35 countries
+              Welcome to Krishna Palace, Dehuroad
             </h1>
             
             {/* Massive Search Bar Widget */}
@@ -62,9 +62,10 @@ export default async function Home() {
                 <MapPin className="text-gray-400 w-5 h-5 mr-3 shrink-0" />
                 <input 
                   type="text" 
-                  placeholder="Search by city, hotel, or neighborhood" 
-                  className="w-full outline-none text-gray-800 text-base md:text-lg font-medium placeholder:font-normal placeholder:text-gray-400"
-                  defaultValue="Krishna Palace, Mumbai"
+                  placeholder="Location" 
+                  className="w-full outline-none text-gray-800 text-base md:text-lg font-medium placeholder:font-normal placeholder:text-gray-400 bg-white"
+                  defaultValue="Krishna Palace, Dehuroad, Pune"
+                  readOnly
                 />
               </div>
               
@@ -189,46 +190,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Popular Collections / Destinations */}
-      <section className="py-12 bg-white border-y border-gray-200">
-        <div className="container px-4 md:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Popular Destinations</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              { name: "Mumbai", count: "140+ Hotels", img: "https://images.unsplash.com/photo-1522206090757-56e6d19e4871?w=500&q=80" },
-              { name: "Delhi", count: "210+ Hotels", img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=500&q=80" },
-              { name: "Bangalore", count: "180+ Hotels", img: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=500&q=80" },
-              { name: "Goa", count: "85+ Hotels", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80" },
-              { name: "Chennai", count: "120+ Hotels", img: "https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?w=500&q=80" },
-              { name: "Hyderabad", count: "150+ Hotels", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80" },
-              { name: "Pune", count: "90+ Hotels", img: "https://images.unsplash.com/photo-1582269438706-e7d69b32cbac?w=500&q=80" },
-              { name: "Kolkata", count: "110+ Hotels", img: "https://images.unsplash.com/photo-1558431382-27e303142255?w=500&q=80" }
-            ].map((city, i) => (
-              <Link href="/rooms" key={i} className="group relative h-40 md:h-48 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-                <Image
-                  src={city.img}
-                  alt={city.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 z-10">
-                  <h3 className="text-white font-bold text-lg md:text-xl">{city.name}</h3>
-                  <p className="text-gray-200 text-xs md:text-sm font-medium">{city.count}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+
       
       {/* Footer Banner */}
       <section className="py-16 bg-gray-50">
         <div className="container px-4 md:px-6">
           <div className="bg-primary text-white rounded-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
             <div className="space-y-4 max-w-2xl text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Become an OYO Wizard</h2>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Become a Krishna Palace Member</h2>
               <p className="text-primary-foreground/90 text-lg">
                 Join our premium membership program and get exclusive benefits, flat discounts, and free room upgrades.
               </p>
