@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import CmsClient from "./CmsClient";
+import CmsClient from "./CMSClient";
 
 export const dynamic = "force-dynamic";
 
