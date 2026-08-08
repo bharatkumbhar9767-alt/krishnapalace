@@ -93,6 +93,24 @@ export default function BookingForm({ room }: { room: any }) {
         ></textarea>
       </div>
 
+      <div className="space-y-4 pt-4 border-t">
+        <h3 className="font-medium text-gray-900">Guest Information</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Full Name</label>
+            <input type="text" name="guestName" required className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="guestEmail" required className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary" />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Phone Number</label>
+          <input type="tel" name="guestPhone" required className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary" />
+        </div>
+      </div>
+
       <div className="border-t pt-4">
         <div className="flex justify-between items-center mb-4 text-lg font-bold">
           <span>Total Amount</span>

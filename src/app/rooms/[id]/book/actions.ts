@@ -14,8 +14,11 @@ export async function createBooking(formData: FormData) {
   const checkInDate = formData.get("checkInDate") as string;
   const checkOutDate = formData.get("checkOutDate") as string;
   const specialRequests = formData.get("specialRequests") as string;
+  const guestName = formData.get("guestName") as string;
+  const guestEmail = formData.get("guestEmail") as string;
+  const guestPhone = formData.get("guestPhone") as string;
 
-  if (!roomId || !checkInDate || !checkOutDate) {
+  if (!roomId || !checkInDate || !checkOutDate || !guestName || !guestEmail || !guestPhone) {
     return { error: "Missing required fields." };
   }
 
@@ -48,7 +51,10 @@ export async function createBooking(formData: FormData) {
         checkOutDate: end,
         totalAmount,
         status: "PENDING",
-        specialRequest: specialRequests || null
+        specialRequest: specialRequests || null,
+        guestName,
+        guestEmail,
+        guestPhone
       }
     });
 
