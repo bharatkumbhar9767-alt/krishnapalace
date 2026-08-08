@@ -4,75 +4,37 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
-export async function updateTestimonialStatus(id: string, status: "APPROVED" | "REJECTED" | "PENDING") {
+export async function approveTestimonial(id: string) {
   const session = await auth();
-  if (!session || (session.user.role !== "SUPER_ADMIN" && session.user.role !== "MANAGER")) {
+  if (!session?.user || (session.user.role !== "SUPERADMIN" && session.user.role !== "MANAGER")) {
     return { error: "Unauthorized" };
   }
-  
+
   try {
     await prisma.testimonial.update({
       where: { id },
-      data: { status }
+      data: { status: "APPROVED" }
     });
     revalidatePath("/admin/cms");
+    revalidatePath("/");
     return { success: true };
-  } catch (error) {
-    console.error(error);
-    return { error: "Failed to update testimonial status" };
+  } catch (e) {
+    return { error: "Failed to approve testimonial" };
   }
 }
 
 export async function deleteTestimonial(id: string) {
   const session = await auth();
-  if (!session || (session.user.role !== "SUPER_ADMIN" && session.user.role !== "MANAGER")) {
+  if (!session?.user || (session.user.role !== "SUPERADMIN" && session.user.role !== "MANAGER")) {
     return { error: "Unauthorized" };
   }
-  
+
   try {
     await prisma.testimonial.delete({ where: { id } });
     revalidatePath("/admin/cms");
+    revalidatePath("/");
     return { success: true };
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
     return { error: "Failed to delete testimonial" };
-  }
-}
-
-export async function createFAQ(data: { question: string, answer: string, order: number }) {
-  const session = await auth();
-  if (!session || (session.user.role !== "SUPER_ADMIN" && session.user.role !== "MANAGER")) {
-    return { error: "Unauthorized" };
-  }
-
-  try {
-    await prisma.fAQ.create({
-      data: {
-        question: data.question,
-        answer: data.answer,
-        order: data.order
-      }
-    });
-    revalidatePath("/admin/cms");
-    return { success: true };
-  } catch (error) {
-    console.error(error);
-    return { error: "Failed to create FAQ" };
-  }
-}
-
-export async function deleteFAQ(id: string) {
-  const session = await auth();
-  if (!session || (session.user.role !== "SUPER_ADMIN" && session.user.role !== "MANAGER")) {
-    return { error: "Unauthorized" };
-  }
-  
-  try {
-    await prisma.fAQ.delete({ where: { id } });
-    revalidatePath("/admin/cms");
-    return { success: true };
-  } catch (error) {
-    console.error(error);
-    return { error: "Failed to delete FAQ" };
   }
 }

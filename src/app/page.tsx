@@ -1,11 +1,40 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { MapPin, Calendar, Users, Search } from "lucide-react";
+import { MapPin, Calendar, Users, Star } from "lucide-react";
+import prisma from "@/lib/prisma";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+async function getTestimonials() {
+  try {
+    return await prisma.testimonial.findMany({
+      where: { status: "APPROVED" },
+      take: 3,
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+async function getFeaturedRooms() {
+  try {
+    return await prisma.roomCategory.findMany({
+      take: 3,
+      orderBy: { basePrice: "desc" }
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+export default async function Home() {
+  const [testimonials, featuredRooms] = await Promise.all([
+    getTestimonials(),
+    getFeaturedRooms()
+  ]);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Hero Section with Search Bar */}
@@ -75,8 +104,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Rooms */}
+      <section className="py-16 bg-white">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">Featured Rooms</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredRooms.map((room) => (
+              <div key={room.id} className="border rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                <div className="h-48 bg-gray-200 relative">
+                   <Image 
+                    src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800" 
+                    alt={room.name}
+                    fill
+                    className="object-cover"
+                   />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-bold text-xl mb-2">{room.name}</h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{room.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="font-extrabold text-xl">${room.basePrice.toString()}</span>
+                    <Link href="/rooms" className="text-primary font-bold text-sm hover:underline">Book Now</Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {featuredRooms.length === 0 && (
+            <p className="text-center text-gray-500">No rooms featured currently.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 bg-gray-50">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">What Our Guests Say</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((test) => (
+              <div key={test.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div className="flex gap-1 text-[#f5a623] mb-4">
+                  {[...Array(test.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                </div>
+                <p className="text-gray-700 italic mb-4">"{test.content}"</p>
+                <p className="font-bold text-gray-900">- {test.authorName}</p>
+              </div>
+            ))}
+          </div>
+          {testimonials.length === 0 && (
+            <p className="text-center text-gray-500">No testimonials yet.</p>
+          )}
+        </div>
+      </section>
+
       {/* Promotional Banners Section */}
-      <section className="container px-4 md:px-6 py-12 -mt-10 relative z-20">
+      <section className="container px-4 md:px-6 py-12 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link href="/rooms" className="group rounded-xl overflow-hidden shadow-md block relative hover:shadow-xl transition-all">
             <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 group-hover:scale-105 transition-transform duration-500" />

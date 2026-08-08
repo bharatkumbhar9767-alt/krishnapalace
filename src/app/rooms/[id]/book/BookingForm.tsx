@@ -2,151 +2,111 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { createBooking } from "./actions";
 
-const bookingSchema = z.object({
-  checkIn: z.string().min(1, "Check-in date is required"),
-  checkOut: z.string().min(1, "Check-out date is required"),
-  guests: z.coerce.number().int().min(1, "At least 1 guest is required"),
-  guestName: z.string().min(2, "Name must be at least 2 characters"),
-  guestEmail: z.string().email("Invalid email address"),
-  guestPhone: z.string().min(10, "Valid phone number is required"),
-  specialRequests: z.string().optional(),
-});
-
-type BookingFormValues = z.infer<typeof bookingSchema>;
-
-export default function BookingForm({ roomId, pricePerNight }: { roomId: string, pricePerNight: number }) {
+export default function BookingForm({ room }: { room: any }) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<BookingFormValues>({
-    resolver: zodResolver(bookingSchema),
-    defaultValues: {
-      guests: 1,
-      guestName: "",
-      guestEmail: "",
-      guestPhone: "",
-      specialRequests: "",
-    }
-  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
 
-  const checkInDate = watch("checkIn");
-  const checkOutDate = watch("checkOut");
+  const calculateTotal = () => {
+    if (!checkIn || !checkOut) return 0;
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    const nights = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+    return nights > 0 ? nights * Number(room.category.basePrice) : 0;
+  };
 
-  let estimatedTotal = 0;
-  if (checkInDate && checkOutDate) {
-    const start = new Date(checkInDate);
-    const end = new Date(checkOutDate);
-    if (!isNaN(start.getTime()) && !isNaN(end.getTime()) && end > start) {
-      const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-      estimatedTotal = days * pricePerNight;
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const formData = new FormData(e.currentTarget);
+    const res = await createBooking(formData);
+
+    if (res?.error) {
+      setError(res.error);
+      setLoading(false);
+    } else {
+      router.push("/dashboard");
     }
   }
 
-  const onSubmit = async (data: BookingFormValues) => {
-    setIsSubmitting(true);
-    setError(null);
-
-    const formData = new FormData();
-    formData.append("roomId", roomId);
-    formData.append("checkIn", data.checkIn);
-    formData.append("checkOut", data.checkOut);
-    formData.append("guests", data.guests.toString());
-    formData.append("guestName", data.guestName);
-    formData.append("guestEmail", data.guestEmail);
-    formData.append("guestPhone", data.guestPhone);
-    if (data.specialRequests) formData.append("specialRequests", data.specialRequests);
-
-    const result = await createBooking(null, formData);
-
-    if (result?.error) {
-      setError(result.error);
-      setIsSubmitting(false);
-    } else if (result?.success) {
-      router.push(`/dashboard?success=true&id=${result.bookingId}`);
-    }
-  };
+  const total = calculateTotal();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && (
-        <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm">
-          {error}
-        </div>
-      )}
+    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-sm border space-y-6">
+      <input type="hidden" name="roomId" value={room.id} />
+      
+      {error && <div className="p-3 text-sm text-red-600 bg-red-50 rounded">{error}</div>}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="checkIn">Check-in Date</Label>
-          <Input id="checkIn" type="date" {...register("checkIn")} />
-          {errors.checkIn && <p className="text-red-500 text-xs">{errors.checkIn.message}</p>}
+          <label className="text-sm font-medium text-gray-700">Check-in Date</label>
+          <input 
+            type="date" 
+            name="checkInDate" 
+            required 
+            value={checkIn}
+            onChange={(e) => setCheckIn(e.target.value)}
+            className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary"
+          />
         </div>
-        
         <div className="space-y-2">
-          <Label htmlFor="checkOut">Check-out Date</Label>
-          <Input id="checkOut" type="date" {...register("checkOut")} />
-          {errors.checkOut && <p className="text-red-500 text-xs">{errors.checkOut.message}</p>}
+          <label className="text-sm font-medium text-gray-700">Check-out Date</label>
+          <input 
+            type="date" 
+            name="checkOutDate" 
+            required 
+            value={checkOut}
+            onChange={(e) => setCheckOut(e.target.value)}
+            className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary"
+          />
         </div>
       </div>
 
-      <div className="space-y-4 pt-4 border-t">
-        <h3 className="font-semibold text-lg">Guest Information</h3>
-        
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="guestName">Full Name</Label>
-          <Input id="guestName" {...register("guestName")} />
-          {errors.guestName && <p className="text-red-500 text-xs">{errors.guestName.message}</p>}
+          <label className="text-sm font-medium text-gray-700">Adults</label>
+          <select name="adults" className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
+            {[1, 2, 3, 4].map(n => <option key={n} value={n}>{n}</option>)}
+          </select>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="guestEmail">Email Address</Label>
-            <Input id="guestEmail" type="email" {...register("guestEmail")} />
-            {errors.guestEmail && <p className="text-red-500 text-xs">{errors.guestEmail.message}</p>}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="guestPhone">Phone Number</Label>
-            <Input id="guestPhone" type="tel" {...register("guestPhone")} />
-            {errors.guestPhone && <p className="text-red-500 text-xs">{errors.guestPhone.message}</p>}
-          </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Children</label>
+          <select name="children" className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
+            {[0, 1, 2].map(n => <option key={n} value={n}>{n}</option>)}
+          </select>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="guests">Number of Guests</Label>
-        <Input id="guests" type="number" min="1" {...register("guests")} />
-        {errors.guests && <p className="text-red-500 text-xs">{errors.guests.message}</p>}
+        <label className="text-sm font-medium text-gray-700">Special Requests</label>
+        <textarea 
+          name="specialRequests" 
+          rows={3} 
+          className="w-full border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary"
+          placeholder="Any special requests? (Optional)"
+        ></textarea>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="specialRequests">Special Requests (Optional)</Label>
-        <Textarea 
-          id="specialRequests" 
-          placeholder="Any special requirements..."
-          {...register("specialRequests")}
-        />
-      </div>
-
-      <div className="p-4 bg-muted/50 rounded-lg border mt-6">
-        <div className="flex justify-between items-center text-lg font-semibold">
-          <span>Estimated Total</span>
-          <span>${estimatedTotal.toFixed(2)}</span>
+      <div className="border-t pt-4">
+        <div className="flex justify-between items-center mb-4 text-lg font-bold">
+          <span>Total Amount</span>
+          <span>${total}</span>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">Excludes taxes and fees.</p>
+        <button 
+          type="submit" 
+          disabled={loading || total <= 0}
+          className="w-full bg-[#1ab64f] hover:bg-[#149b42] text-white font-bold py-3 px-4 rounded transition-colors disabled:opacity-50"
+        >
+          {loading ? "Processing..." : "Confirm Booking"}
+        </button>
+        <p className="text-xs text-center text-gray-500 mt-3">You will not be charged right now. Payment is collected at the property.</p>
       </div>
-
-      <Button type="submit" className="w-full text-lg h-12" disabled={isSubmitting}>
-        {isSubmitting ? "Processing..." : "Confirm Booking"}
-      </Button>
     </form>
   );
 }

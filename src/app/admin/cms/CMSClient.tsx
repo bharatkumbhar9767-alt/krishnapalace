@@ -1,137 +1,82 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { updateTestimonialStatus, deleteTestimonial, createFAQ, deleteFAQ } from "./actions";
+import { approveTestimonial, deleteTestimonial } from "./actions";
 
-export default function CMSClient({ initialTestimonials, initialFaqs }: { initialTestimonials: any[], initialFaqs: any[] }) {
-  const [activeTab, setActiveTab] = useState<"testimonials" | "faqs">("testimonials");
+export default function CmsClient({ testimonials }: { testimonials: any[] }) {
+  const [loading, setLoading] = useState<string | null>(null);
 
-  // FAQ Form State
-  const [showFaqForm, setShowFaqForm] = useState(false);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [order, setOrder] = useState("0");
-
-  const handleTestimonialAction = async (id: string, action: "APPROVED" | "REJECTED" | "DELETE") => {
-    if (action === "DELETE") {
-      await deleteTestimonial(id);
-    } else {
-      await updateTestimonialStatus(id, action as any);
-    }
-    window.location.reload();
+  const handleApprove = async (id: string) => {
+    setLoading(id);
+    const res = await approveTestimonial(id);
+    if (!res.success) alert(res.error);
+    setLoading(null);
   };
 
-  const handleCreateFAQ = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await createFAQ({ question, answer, order: parseInt(order) });
-    window.location.reload();
-  };
-
-  const handleDeleteFAQ = async (id: string) => {
-    await deleteFAQ(id);
-    window.location.reload();
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this testimonial?")) return;
+    setLoading(id);
+    const res = await deleteTestimonial(id);
+    if (!res.success) alert(res.error);
+    setLoading(null);
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex border-b">
-        <button 
-          className={`px-4 py-2 font-medium ${activeTab === "testimonials" ? "border-b-2 border-primary text-primary" : "text-muted-foreground"}`}
-          onClick={() => setActiveTab("testimonials")}
-        >
-          Testimonials
-        </button>
-        <button 
-          className={`px-4 py-2 font-medium ${activeTab === "faqs" ? "border-b-2 border-primary text-primary" : "text-muted-foreground"}`}
-          onClick={() => setActiveTab("faqs")}
-        >
-          FAQs
-        </button>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="p-6 border-b border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900">Manage Testimonials</h2>
+        <p className="text-gray-500 text-sm mt-1">Approve testimonials to show them on the homepage.</p>
       </div>
-
-      {activeTab === "testimonials" && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Testimonial Reviews</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {initialTestimonials.map(t => (
-              <div key={t.id} className="p-4 border rounded-xl bg-background shadow-sm space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-bold">{t.authorName}</h4>
-                    <div className="text-yellow-500 text-xs">{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</div>
-                  </div>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                    t.status === "APPROVED" ? "bg-green-100 text-green-700" :
-                    t.status === "REJECTED" ? "bg-red-100 text-red-700" :
-                    "bg-yellow-100 text-yellow-700"
-                  }`}>{t.status}</span>
-                </div>
-                <p className="text-sm text-muted-foreground italic">"{t.content}"</p>
-                
-                <div className="pt-3 border-t flex gap-2">
-                  {t.status !== "APPROVED" && (
-                    <Button size="sm" onClick={() => handleTestimonialAction(t.id, "APPROVED")}>Approve</Button>
-                  )}
-                  {t.status !== "REJECTED" && (
-                    <Button size="sm" variant="outline" onClick={() => handleTestimonialAction(t.id, "REJECTED")}>Reject</Button>
-                  )}
-                  <Button size="sm" variant="destructive" onClick={() => handleTestimonialAction(t.id, "DELETE")}>Delete</Button>
-                </div>
-              </div>
-            ))}
-            {initialTestimonials.length === 0 && (
-              <div className="col-span-full p-8 text-center text-muted-foreground">No testimonials found.</div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {activeTab === "faqs" && (
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Frequently Asked Questions</h2>
-            <Button onClick={() => setShowFaqForm(!showFaqForm)}>{showFaqForm ? "Cancel" : "+ Add FAQ"}</Button>
-          </div>
-
-          {showFaqForm && (
-            <form onSubmit={handleCreateFAQ} className="p-6 border rounded-xl bg-background shadow-sm space-y-4">
-              <div className="space-y-2">
-                <Label>Question</Label>
-                <Input required value={question} onChange={e => setQuestion(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label>Answer</Label>
-                <Textarea required value={answer} onChange={e => setAnswer(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label>Display Order (0 is first)</Label>
-                <Input type="number" required value={order} onChange={e => setOrder(e.target.value)} />
-              </div>
-              <Button type="submit">Save FAQ</Button>
-            </form>
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="bg-gray-50 border-b border-gray-200">
+            <th className="p-4 font-bold text-gray-900">Author</th>
+            <th className="p-4 font-bold text-gray-900">Content</th>
+            <th className="p-4 font-bold text-gray-900">Rating</th>
+            <th className="p-4 font-bold text-gray-900">Status</th>
+            <th className="p-4 font-bold text-gray-900 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {testimonials.map((test) => (
+            <tr key={test.id} className="hover:bg-gray-50 transition-colors">
+              <td className="p-4 font-medium text-gray-900">{test.authorName}</td>
+              <td className="p-4 text-gray-600 truncate max-w-xs">{test.content}</td>
+              <td className="p-4 text-gray-600">{test.rating} / 5</td>
+              <td className="p-4">
+                <span className={`px-2.5 py-1 rounded-full text-xs font-bold tracking-wide ${
+                  test.status === 'APPROVED' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                }`}>
+                  {test.status}
+                </span>
+              </td>
+              <td className="p-4 text-right space-x-2">
+                {test.status !== "APPROVED" && (
+                  <button 
+                    onClick={() => handleApprove(test.id)}
+                    disabled={loading === test.id}
+                    className="text-sm bg-[#1ab64f] hover:bg-[#149b42] text-white px-3 py-1.5 rounded disabled:opacity-50"
+                  >
+                    Approve
+                  </button>
+                )}
+                <button 
+                  onClick={() => handleDelete(test.id)}
+                  disabled={loading === test.id}
+                  className="text-sm bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded disabled:opacity-50"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+          {testimonials.length === 0 && (
+            <tr>
+              <td colSpan={5} className="p-8 text-center text-gray-500">No testimonials found.</td>
+            </tr>
           )}
-
-          <div className="space-y-3">
-            {initialFaqs.map(faq => (
-              <div key={faq.id} className="p-4 border rounded-xl bg-background shadow-sm flex justify-between items-center">
-                <div>
-                  <h4 className="font-bold">Q: {faq.question}</h4>
-                  <p className="text-sm text-muted-foreground mt-1">A: {faq.answer}</p>
-                  <div className="text-xs text-muted-foreground mt-2">Order: {faq.order}</div>
-                </div>
-                <Button variant="destructive" size="sm" onClick={() => handleDeleteFAQ(faq.id)}>Delete</Button>
-              </div>
-            ))}
-            {initialFaqs.length === 0 && (
-              <div className="p-8 text-center text-muted-foreground">No FAQs found.</div>
-            )}
-          </div>
-        </div>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 }
