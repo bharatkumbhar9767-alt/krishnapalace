@@ -48,7 +48,7 @@ export async function createBooking(formData: FormData) {
         checkOutDate: end,
         totalAmount,
         status: "PENDING",
-        specialRequests: specialRequests || null
+        specialRequest: specialRequests || null
       }
     });
 
