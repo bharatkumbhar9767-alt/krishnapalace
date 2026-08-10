@@ -19,11 +19,11 @@ const RoomSlider = ({ rooms, fadeInUp }: { rooms: any[], fadeInUp: Variants }) =
     <div className="relative w-full max-w-4xl mx-auto">
       {rooms.length > 1 && (
         <>
-          <button onClick={prev} className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-4 md:-translate-x-6 w-12 h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
-            <ChevronLeft className="w-6 h-6" />
+          <button onClick={prev} className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-2 md:-translate-x-6 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
-          <button onClick={next} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-4 md:translate-x-6 w-12 h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
-            <ChevronRight className="w-6 h-6" />
+          <button onClick={next} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-2 md:translate-x-6 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
         </>
       )}
@@ -180,19 +180,21 @@ export default function HomeClient({ testimonials, featuredRooms }: { testimonia
                 </div>
               </div>
 
-              <Link 
-                href="/rooms"
-                className="w-full md:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl shrink-0 transition-all flex items-center justify-center shadow-lg hover:shadow-primary/30"
-              >
-                Search Rooms
-              </Link>
-              <button 
-                onClick={() => window.open('https://wa.me/917057998449', '_blank')}
-                className="w-full md:w-auto px-6 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-lg rounded-xl shrink-0 transition-all flex items-center justify-center shadow-lg hover:shadow-[#25D366]/30"
-              >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                WhatsApp
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0 mt-2 md:mt-0">
+                <Link 
+                  href="/rooms"
+                  className="w-full sm:w-auto px-6 py-4 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl transition-all flex items-center justify-center shadow-lg hover:shadow-primary/30 whitespace-nowrap"
+                >
+                  Search Rooms
+                </Link>
+                <button 
+                  onClick={() => window.open('https://wa.me/917057998449', '_blank')}
+                  className="w-full sm:w-auto px-6 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-lg rounded-xl transition-all flex items-center justify-center shadow-lg hover:shadow-[#25D366]/30 whitespace-nowrap"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2 shrink-0" />
+                  WhatsApp
+                </button>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -429,9 +431,9 @@ export default function HomeClient({ testimonials, featuredRooms }: { testimonia
           </p>
           <button 
             onClick={() => window.open('https://wa.me/917057998449', '_blank')}
-            className="h-16 px-8 text-lg font-bold rounded-full bg-white text-primary hover:bg-gray-100 shadow-xl transition-transform hover:-translate-y-1 inline-flex items-center"
+            className="h-16 px-8 text-lg font-bold rounded-full bg-white text-primary hover:bg-gray-100 shadow-xl transition-transform hover:-translate-y-1 inline-flex items-center justify-center whitespace-nowrap"
           >
-            <MessageCircle className="w-6 h-6 mr-2 text-[#25D366]" />
+            <MessageCircle className="w-6 h-6 mr-2 shrink-0 text-[#25D366]" />
             Book on WhatsApp Now
           </button>
         </div>
