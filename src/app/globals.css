@@ -8,8 +8,18 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-serif);
+
+  --color-plum-dark: #17101F;
+  --color-plum-secondary: #25182E;
+  --color-lavender: #A875C9;
+  --color-lavender-light: #C7A5DD;
+  --color-gold: #D6B56A;
+  --color-ivory: #FFF9F0;
+  --color-cream: #F8F0E5;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,72 +59,72 @@
 }
 
 :root {
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.2 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0 0);
-  --primary: oklch(0.6 0.22 25); /* OYO Red */
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.96 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.96 0 0);
-  --accent-foreground: oklch(0.2 0 0);
-  --destructive: oklch(0.6 0.22 25);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.6 0.22 25);
-  --chart-1: oklch(0.6 0.22 25);
-  --chart-2: oklch(0.55 0.1 250);
-  --chart-3: oklch(0.45 0.1 250);
-  --chart-4: oklch(0.75 0.15 65);
-  --chart-5: oklch(0.35 0.1 250);
-  --radius: 0.5rem;
-  --sidebar: oklch(0.98 0 0);
-  --sidebar-foreground: oklch(0.2 0 0);
-  --sidebar-primary: oklch(0.6 0.22 25);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.2 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.6 0.22 25);
+  --background: #FFF9F0;
+  --foreground: #211827;
+  --card: #FFF9F0;
+  --card-foreground: #211827;
+  --popover: #FFF9F0;
+  --popover-foreground: #211827;
+  --primary: #A875C9;
+  --primary-foreground: #FFF9F0;
+  --secondary: #D6B56A;
+  --secondary-foreground: #17101F;
+  --muted: #F8F0E5;
+  --muted-foreground: #6B5D73;
+  --accent: #D6B56A;
+  --accent-foreground: #17101F;
+  --destructive: #A875C9;
+  --border: #E8DDEA;
+  --input: #E8DDEA;
+  --ring: #D6B56A;
+  --chart-1: #A875C9;
+  --chart-2: #D6B56A;
+  --chart-3: #25182E;
+  --chart-4: #17101F;
+  --chart-5: #6B5D73;
+  --radius: 1rem;
+  --sidebar: #FFF9F0;
+  --sidebar-foreground: #211827;
+  --sidebar-primary: #A875C9;
+  --sidebar-primary-foreground: #FFF9F0;
+  --sidebar-accent: #F8F0E5;
+  --sidebar-accent-foreground: #211827;
+  --sidebar-border: #E8DDEA;
+  --sidebar-ring: #D6B56A;
 }
 
 .dark {
-  --background: oklch(0.15 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.2 0 0);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.2 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.6 0.22 25);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.25 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.25 0 0);
-  --accent-foreground: oklch(0.98 0 0);
-  --destructive: oklch(0.6 0.22 25);
-  --border: oklch(0.3 0 0);
-  --input: oklch(0.3 0 0);
-  --ring: oklch(0.6 0.22 25);
-  --chart-1: oklch(0.6 0.22 25);
-  --chart-2: oklch(0.55 0.1 250);
-  --chart-3: oklch(0.45 0.1 250);
-  --chart-4: oklch(0.85 0.15 65);
-  --chart-5: oklch(0.35 0.1 250);
-  --sidebar: oklch(0.15 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.6 0.22 25);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.25 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.3 0 0);
-  --sidebar-ring: oklch(0.6 0.22 25);
+  --background: #17101F;
+  --foreground: #FFF9F0;
+  --card: #25182E;
+  --card-foreground: #FFF9F0;
+  --popover: #25182E;
+  --popover-foreground: #FFF9F0;
+  --primary: #A875C9;
+  --primary-foreground: #FFF9F0;
+  --secondary: #D6B56A;
+  --secondary-foreground: #17101F;
+  --muted: #25182E;
+  --muted-foreground: #E8DDEA;
+  --accent: #D6B56A;
+  --accent-foreground: #17101F;
+  --destructive: #A875C9;
+  --border: #3B2847;
+  --input: #3B2847;
+  --ring: #D6B56A;
+  --chart-1: #A875C9;
+  --chart-2: #D6B56A;
+  --chart-3: #C7A5DD;
+  --chart-4: #FFF9F0;
+  --chart-5: #E8DDEA;
+  --sidebar: #17101F;
+  --sidebar-foreground: #FFF9F0;
+  --sidebar-primary: #A875C9;
+  --sidebar-primary-foreground: #FFF9F0;
+  --sidebar-accent: #25182E;
+  --sidebar-accent-foreground: #FFF9F0;
+  --sidebar-border: #3B2847;
+  --sidebar-ring: #D6B56A;
 }
 
 @layer base {
@@ -122,9 +132,57 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased selection:bg-[#A875C9]/20 selection:text-[#17101F];
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   }
 }
+
+/* Premium Visual Utilities */
+@layer components {
+  .hotel-card {
+    background-color: var(--card);
+    border: 1px solid rgba(214, 181, 106, 0.25);
+    box-shadow: 0 6px 24px -8px rgba(23, 16, 31, 0.08);
+    border-radius: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hotel-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px -10px rgba(23, 16, 31, 0.14);
+    border-color: rgba(214, 181, 106, 0.45);
+  }
+
+  .gold-badge {
+    background: linear-gradient(135deg, rgba(214, 181, 106, 0.15) 0%, rgba(214, 181, 106, 0.05) 100%);
+    border: 1px solid rgba(214, 181, 106, 0.35);
+    color: #D6B56A;
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #D6B56A 0%, #B89648 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-lavender {
+    background-color: #A875C9;
+    color: #FFF9F0;
+    box-shadow: 0 4px 14px rgba(168, 117, 201, 0.25);
+    transition: all 0.25s ease;
+  }
+
+  .btn-lavender:hover {
+    background-color: #945EB7;
+    box-shadow: 0 6px 20px rgba(168, 117, 201, 0.35);
+    transform: translateY(-1px);
+  }
+}
+
+

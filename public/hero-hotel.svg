@@ -1,0 +1,35 @@
+<svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7d3c45" />
+      <stop offset="100%" stop-color="#40131c" />
+    </linearGradient>
+    <linearGradient id="light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbf6ec" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#fbf6ec" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)" />
+  <path fill="#fff1e6" d="M220 750h1000c0 0 28-80-40-180s-260-120-260-120H540s-170 20-240 120-40 180-40 180Z" opacity="0.16" />
+  <rect x="250" y="380" width="930" height="420" rx="48" fill="#fbf6ec" opacity="0.12" />
+  <path fill="#c49a52" d="M310 680c0-40 32-72 72-72h676c40 0 72 32 72 72v20H310v-20Z" opacity="0.18" />
+  <path fill="#fbf6ec" d="M330 550h680v120c0 40-32 72-72 72H402c-40 0-72-32-72-72V550Z" opacity="0.3" />
+  <rect x="330" y="540" width="680" height="130" rx="36" fill="#ffffff" opacity="0.12" />
+  <path fill="#641f2b" d="M400 520c0-18 14-32 32-32h576c18 0 32 14 32 32v80H400v-80Z" opacity="0.45" />
+  <rect x="450" y="320" width="540" height="160" rx="32" fill="#fff1e6" opacity="0.22" />
+  <path fill="#641f2b" d="M450 320h540v28H450z" opacity="0.35" />
+  <circle cx="420" cy="260" r="85" fill="#fff1e6" opacity="0.16" />
+  <rect x="510" y="500" width="420" height="160" rx="32" fill="#ffffff" opacity="0.12" />
+  <rect x="512" y="504" width="416" height="64" rx="24" fill="#c49a52" opacity="0.3" />
+  <path d="M426 634c38-24 92-32 150-32s112 8 150 32" stroke="#ffffff" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.5" />
+  <path d="M250 180c0-40 40-72 90-72h760c50 0 90 32 90 72v250H250V180Z" fill="#fff3e6" opacity="0.08" />
+  <rect x="320" y="220" width="220" height="260" rx="38" fill="#fbf6ec" opacity="0.65" />
+  <rect x="380" y="260" width="110" height="180" rx="24" fill="#641f2b" opacity="0.14" />
+  <path d="M420 230h80" stroke="#c49a52" stroke-width="12" stroke-linecap="round" />
+  <path d="M820 220c0-14 12-26 26-26h68c14 0 26 12 26 26v120h-120V220Z" fill="#fbf6ec" opacity="0.73" />
+  <path d="M852 300h80" stroke="#641f2b" stroke-width="10" stroke-linecap="round" />
+  <circle cx="1120" cy="160" r="95" fill="#fff1e6" opacity="0.17" />
+  <path d="M1080 175c16-10 42-14 69 2" stroke="#fbf6ec" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.65" />
+  <path d="M540 180c46-32 130-40 194-12" stroke="#c49a52" stroke-width="15" stroke-linecap="round" opacity="0.6" />
+  <rect x="60" y="100" width="1240" height="700" rx="80" fill="url(#light)" />
+</svg>
