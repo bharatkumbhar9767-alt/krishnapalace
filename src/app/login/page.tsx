@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,13 +30,14 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        toast.error("Invalid email or password");
       } else {
+        toast.success("Signed in successfully!");
         router.push("/dashboard");
         router.refresh();
       }
     } catch (err) {
-      setError("An error occurred during login");
+      toast.error("An error occurred during login");
     } finally {
       setLoading(false);
     }
@@ -77,11 +79,6 @@ export default function LoginPage() {
                 required
               />
             </div>
-            {error && (
-              <div className="text-sm text-red-500 text-center">
-                {error}
-              </div>
-            )}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>

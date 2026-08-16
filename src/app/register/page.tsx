@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +22,7 @@ export default function RegisterPage() {
     const result = await registerUser(formData);
     
     if (result.error) {
-      setError(result.error);
+      toast.error(result.error);
       setLoading(false);
       return;
     }
@@ -37,10 +38,11 @@ export default function RegisterPage() {
     });
 
     if (signInResult?.error) {
-      setError("Registration successful, but auto-login failed. Please log in manually.");
+      toast.error("Registration successful, but auto-login failed. Please log in manually.");
       setLoading(false);
       router.push("/login");
     } else {
+      toast.success("Account created successfully!");
       router.push("/dashboard");
       router.refresh();
     }
@@ -62,11 +64,6 @@ export default function RegisterPage() {
         </div>
         
         <form className="mt-8 space-y-6" action={handleSubmit}>
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
-            </div>
-          )}
           
           <div className="space-y-4 rounded-md shadow-sm">
             <div>

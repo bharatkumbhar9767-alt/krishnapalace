@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createBooking } from "./actions";
+import { toast } from "sonner";
 
 export default function BookingForm({ room }: { room: any }) {
   const router = useRouter();
@@ -28,13 +29,17 @@ export default function BookingForm({ room }: { room: any }) {
     const res = await createBooking(formData);
 
     if (res?.error) {
+      toast.error(res.error);
       setError(res.error);
       setLoading(false);
     } else {
+      toast.success("Booking confirmed! Redirecting to WhatsApp...");
       const guestName = formData.get("guestName") as string;
       const message = encodeURIComponent(`Hello Krishna Palace! I would like to confirm my booking for the ${room.category.name} (Room ${room.roomNumber}) from ${checkIn} to ${checkOut}. My name is ${guestName}.`);
       const whatsappNumber = "1234567890"; // TODO: Replace with the actual hotel owner's WhatsApp number (include country code, no +)
-      window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+      setTimeout(() => {
+        window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+      }, 1500);
     }
   }
 

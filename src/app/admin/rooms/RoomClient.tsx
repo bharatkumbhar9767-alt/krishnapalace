@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createRoomCategory, createRoom, updateRoomStatus, uploadRoomImage } from "./actions";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function RoomClient({ initialCategories }: { initialCategories: any[] }) {
   const [categories, setCategories] = useState(initialCategories);
@@ -34,11 +35,12 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
     });
 
     if (result.success) {
-      alert("Category created! Refresh the page to see changes.");
+      toast.success("Category created successfully!");
       setShowCategoryForm(false);
       setNewCatName(""); setNewCatDesc(""); setNewCatPrice(""); setNewCatCap("");
+      setTimeout(() => window.location.reload(), 1500);
     } else {
-      alert(result.error);
+      toast.error(result.error);
     }
   };
 
@@ -51,11 +53,12 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
     });
 
     if (result.success) {
-      alert("Room created! Refresh the page to see changes.");
+      toast.success("Room created successfully!");
       setShowRoomFormFor(null);
       setNewRoomNum(""); setNewRoomStatus("AVAILABLE");
+      setTimeout(() => window.location.reload(), 1500);
     } else {
-      alert(result.error);
+      toast.error(result.error);
     }
   };
 
@@ -63,10 +66,10 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
     const newStatus = currentStatus === "AVAILABLE" ? "MAINTENANCE" : "AVAILABLE";
     const result = await updateRoomStatus(roomId, newStatus as any);
     if (result.success) {
-      alert(`Room status updated to ${newStatus}. Refreshing...`);
-      window.location.reload();
+      toast.success(`Room status updated to ${newStatus}`);
+      setTimeout(() => window.location.reload(), 1000);
     } else {
-      alert(result.error);
+      toast.error(result.error);
     }
   };
 
@@ -83,10 +86,10 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
     const result = await uploadRoomImage(formData);
     
     if (result.success) {
-      alert("Image uploaded successfully!");
-      window.location.reload();
+      toast.success("Image uploaded successfully!");
+      setTimeout(() => window.location.reload(), 1000);
     } else {
-      alert(result.error);
+      toast.error(result.error);
     }
     setUploadingImageFor(null);
   };
