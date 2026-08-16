@@ -64,6 +64,6 @@ export async function createBooking(formData: FormData) {
     return { success: true };
   } catch (error) {
     console.error("Booking error:", error);
-    return { error: "Failed to create booking. Please try again." };
+    return { error: "Failed to create booking: " + String(error) };
   }
 }
