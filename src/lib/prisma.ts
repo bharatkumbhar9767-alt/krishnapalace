@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/krishnapalace?schema=public'
+const connectionString = process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/krishnapalace?schema=public'
 
 const adapter = new PrismaPg({ connectionString })
 
