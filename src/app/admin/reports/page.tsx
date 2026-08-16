@@ -1,35 +1,30 @@
-import { FileSpreadsheet, Download } from "lucide-react";
+import { getDashboardMetrics } from "./actions";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import ReportsClient from "./ReportsClient";
 
 export const dynamic = "force-dynamic";
 
-export default function ReportsPage() {
+export default async function AdminReportsPage() {
+  const session = await auth();
+  
+  if (!session || (session.user.role !== "SUPER_ADMIN" && session.user.role !== "MANAGER")) {
+    redirect("/dashboard");
+  }
+
+  const result = await getDashboardMetrics();
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
-        <p className="text-gray-500 mt-1">Export data and generate insights.</p>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight">Analytics & Reports</h1>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-          <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4">
-            <FileSpreadsheet className="w-6 h-6" />
-          </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">Bookings Export (CSV/Excel)</h3>
-          <p className="text-gray-600 text-sm mb-6">
-            Download a complete historical record of all bookings including guest details, room assignments, and payment amounts. 
-            Compatible with Microsoft Excel and Google Sheets.
-          </p>
-          <a 
-            href="/api/export/bookings" 
-            target="_blank"
-            className="inline-flex items-center justify-center bg-[#1ab64f] hover:bg-[#149b42] text-white font-bold py-2.5 px-4 rounded transition-colors w-full sm:w-auto"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Download CSV Report
-          </a>
-        </div>
-      </div>
+      
+      {result.error ? (
+        <div className="text-red-500">{result.error}</div>
+      ) : (
+        <ReportsClient data={result} />
+      )}
     </div>
   );
 }
