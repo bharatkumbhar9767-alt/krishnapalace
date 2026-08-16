@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { createRoomCategory, createRoom, updateRoomStatus, uploadRoomImage } from "./actions";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Loader2, Plus, ImagePlus } from "lucide-react";
 
 export default function RoomClient({ initialCategories }: { initialCategories: any[] }) {
   const [categories, setCategories] = useState(initialCategories);
@@ -212,11 +213,13 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
                             </div>
                           ))}
                           
-                          <label className="w-16 h-16 flex items-center justify-center border-2 border-dashed rounded-md cursor-pointer hover:bg-muted/50 transition-colors">
+                          <label className="w-16 h-16 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 hover:border-red-400 transition-all group">
                             {uploadingImageFor === room.id ? (
-                              <span className="text-xs text-muted-foreground animate-pulse">...</span>
+                              <Loader2 className="w-6 h-6 text-red-600 animate-spin" />
                             ) : (
-                              <span className="text-2xl text-muted-foreground">+</span>
+                              <>
+                                <ImagePlus className="w-6 h-6 text-gray-400 group-hover:text-red-500 transition-colors" />
+                              </>
                             )}
                             <input 
                               type="file" 

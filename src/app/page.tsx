@@ -396,6 +396,56 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* Special Offers Section */}
+        <section className="bg-white py-24">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-3xl text-center mx-auto mb-16">
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Exclusive Deals</span>
+              <h2 className="mt-4 text-3xl md:text-4xl font-serif font-bold text-gray-900">Special Offers</h2>
+              <p className="mt-4 text-gray-500 max-w-xl mx-auto leading-relaxed">
+                Take advantage of our exclusive seasonal offers and packages designed to make your stay even more memorable.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto">
+              <div className="group relative overflow-hidden rounded-xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 z-0" />
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?q=80&w=2070&auto=format&fit=crop')] mix-blend-overlay opacity-20 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0" />
+                <div className="relative z-10 p-8 sm:p-10 flex flex-col h-full min-h-[320px]">
+                  <div className="inline-flex self-start px-3 py-1 bg-red-700 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-6">
+                    Save 15%
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold text-white mb-4">Extended Stay</h3>
+                  <p className="text-gray-300 leading-relaxed max-w-sm mb-8 flex-1">
+                    Stay with us for 3 nights or more and receive an exclusive 15% discount on your entire booking.
+                  </p>
+                  <Link href="/rooms" className="inline-flex items-center gap-2 text-white font-semibold uppercase tracking-widest text-sm hover:text-red-400 transition-colors w-fit group/link">
+                    Book Now
+                    <svg className="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                <div className="absolute inset-0 bg-gray-50 z-0" />
+                <div className="relative z-10 p-8 sm:p-10 flex flex-col h-full min-h-[320px]">
+                  <div className="inline-flex self-start px-3 py-1 bg-gray-900 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-6">
+                    Corporate
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">Business Travelers</h3>
+                  <p className="text-gray-600 leading-relaxed max-w-sm mb-8 flex-1">
+                    Special weekday rates and flexible hourly check-ins tailored for professionals on the go. Contact us directly.
+                  </p>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-gray-900 font-semibold uppercase tracking-widest text-sm hover:text-red-700 transition-colors w-fit group/link">
+                    Contact Us
+                    <MessageCircle className="w-4 h-4 transition-transform group-hover/link:scale-110" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials */}
         <section className="py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">

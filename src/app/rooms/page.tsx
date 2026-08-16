@@ -31,8 +31,8 @@ export default async function RoomsPage() {
             <span className="bg-gray-800 px-3 py-1.5 rounded-full flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" /> Krishna Palace, Dehuroad, Pune
             </span>
-            <span className="bg-gray-800 px-3 py-1.5 rounded-full">18 Jan - 19 Jan</span>
-            <span className="bg-gray-800 px-3 py-1.5 rounded-full">1 Room, 2 Guests</span>
+            <span className="bg-gray-800 px-3 py-1.5 rounded-full text-gray-300">Dates Flexible</span>
+            <span className="bg-gray-800 px-3 py-1.5 rounded-full text-gray-300">All Rooms</span>
           </div>
         </div>
       </div>
