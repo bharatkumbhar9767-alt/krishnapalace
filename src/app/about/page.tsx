@@ -16,14 +16,15 @@ export default function AboutPage() {
         </div>
         
         <div className="space-y-6 text-lg text-muted-foreground">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Story</h2>
           <p>
-            Welcome to Krishna Palace, a sanctuary of elegance and comfort situated in the vibrant heart of the city. Since our inception, we have been dedicated to providing our guests with an unforgettable experience that blends traditional hospitality with modern luxury.
+            Established with a vision to provide exceptional comfort and convenience, Hotel Krishna Palace has grown to become a preferred choice for travelers in Pune and Dehu Road. We understand that whether you are traveling for business, pilgrimage, or leisure, your accommodation plays a crucial role in your overall experience.
           </p>
           <p>
-            Our commitment to excellence is reflected in every detail of our hotel, from the meticulously designed rooms and suites to our world-class dining and wellness facilities. Whether you are traveling for business or leisure, Krishna Palace offers the perfect environment to relax, rejuvenate, and create lasting memories.
+            Our mission is to seamlessly blend modern amenities with authentic Indian hospitality. We recognized the need for flexible accommodations in our bustling city, which is why we pioneered flexible hourly booking options alongside traditional overnight stays, ensuring our guests only pay for the time they truly need.
           </p>
           <p>
-            We take pride in our dedicated staff, who are available around the clock to ensure your stay is flawless. At Krishna Palace, you are not just a guest; you are a valued member of our extended family.
+            Driven by our core values of integrity, cleanliness, and guest satisfaction, every team member at Krishna Palace is dedicated to creating a welcoming sanctuary. We continually invest in upgrading our facilities and training our staff to exceed your expectations.
           </p>
         </div>
       </div>

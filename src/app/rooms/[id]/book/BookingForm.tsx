@@ -36,7 +36,7 @@ export default function BookingForm({ room }: { room: any }) {
       toast.success("Booking confirmed! Redirecting to WhatsApp...");
       const guestName = formData.get("guestName") as string;
       const message = encodeURIComponent(`Hello Krishna Palace! I would like to confirm my booking for the ${room.category.name} (Room ${room.roomNumber}) from ${checkIn} to ${checkOut}. My name is ${guestName}.`);
-      const whatsappNumber = "1234567890"; // TODO: Replace with the actual hotel owner's WhatsApp number (include country code, no +)
+      const whatsappNumber = "917057998449"; // Used the actual hotel owner's WhatsApp number
       setTimeout(() => {
         window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
       }, 1500);

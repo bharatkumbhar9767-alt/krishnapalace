@@ -18,13 +18,15 @@ import {
   Sparkles,
   Headphones,
   Search,
+  Clock,
+  Droplets
 } from "lucide-react";
 import prisma from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 // Configuration for WhatsApp Customer Contact (Homepage only)
-const WHATSAPP_NUMBER = "REPLACE_WITH_ACTUAL_NUMBER"; // Replace with actual international format number without + or hyphens, e.g. "911234567890"
+const WHATSAPP_NUMBER = "917057998449";
 const WHATSAPP_DEFAULT_MESSAGE = "Hello Krishna Palace, I would like to know more about room availability and booking.";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE)}`;
 
@@ -205,37 +207,81 @@ export default async function Home() {
       </section>
 
       <main className="flex-1">
+        {/* Connectivity Section */}
+        <section className="container mx-auto px-4 md:px-6 py-12 border-b border-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Location</span>
+              <h2 className="mt-4 font-serif text-3xl sm:text-4xl font-bold text-gray-900">Connectivity & Accessibility</h2>
+              <p className="mt-4 text-gray-600 max-w-lg">Strategically located to keep you connected to major transit routes and destinations in and around Pune.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <p className="font-bold text-gray-900">Pune International Airport</p>
+                <p className="text-red-700 font-semibold mt-1">~30 km</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <p className="font-bold text-gray-900">Pune-Mumbai Expressway</p>
+                <p className="text-red-700 font-semibold mt-1">~5 km</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <p className="font-bold text-gray-900">Pune-Bengaluru Highway</p>
+                <p className="text-red-700 font-semibold mt-1">~2 km</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                <p className="font-bold text-gray-900">Dehu Road Railway Station</p>
+                <p className="text-red-700 font-semibold mt-1">~1 km</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Why Choose Krishna Palace Section */}
         <section className="container mx-auto px-4 md:px-6 pt-16 pb-24">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Premium Standards</span>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Experience the perfect blend</span>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl font-bold text-gray-900">
-              Why Choose Krishna Palace
+              Why Choose Us
             </h2>
             <div className="mx-auto mt-6 h-1 w-16 bg-red-700" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
             {[
               {
-                icon: <Bed className="w-8 h-8 text-red-700" />,
-                title: "Luxurious Rooms",
-                desc: "Spacious, elegant rooms designed for restful and relaxing stays.",
+                icon: <MapPin className="w-8 h-8 text-red-700" />,
+                title: "Best Location",
+                desc: "Conveniently situated in Dehu Road with easy access to major transit points and local attractions.",
+              },
+              {
+                icon: <Star className="w-8 h-8 text-red-700" />,
+                title: "Affordable Pricing",
+                desc: "Premium comfort that doesn't break the bank, featuring flexible hourly and overnight rates.",
               },
               {
                 icon: <Sparkles className="w-8 h-8 text-red-700" />,
-                title: "Spotless Hygiene",
-                desc: "Impeccable housekeeping and attention to every detail for your comfort.",
+                title: "Quality Service",
+                desc: "Uncompromising standards in hospitality to ensure your stay is comfortable and hassle-free.",
               },
               {
-                icon: <MapPin className="w-8 h-8 text-red-700" />,
-                title: "Prime Location",
-                desc: "Convenient access to local dining, shopping, and transport hubs.",
+                icon: <Bed className="w-8 h-8 text-red-700" />,
+                title: "Clean Rooms",
+                desc: "Immaculate, sanitized, and well-maintained accommodations for your peace of mind.",
               },
               {
                 icon: <Headphones className="w-8 h-8 text-red-700" />,
                 title: "24/7 Support",
-                desc: "Warm, helpful service ready to assist you throughout your stay.",
+                desc: "Round-the-clock front desk and room service to cater to your needs at any hour. We offer full in-room dining services.",
+              },
+              {
+                icon: <Coffee className="w-8 h-8 text-red-700" />,
+                title: "Restaurant Backup",
+                desc: "We have an excellent restaurant backup to ensure you always have access to delicious meals and drinks during your stay.",
+              },
+              {
+                icon: <Users className="w-8 h-8 text-red-700" />,
+                title: "Friendly Staff",
+                desc: "A dedicated team committed to making you feel at home with warm, personalized service.",
               },
             ].map((item) => (
                <div key={item.title} className="flex flex-col items-center text-center group">
@@ -250,6 +296,33 @@ export default async function Home() {
                  </p>
                </div>
             ))}
+          </div>
+        </section>
+
+        {/* Amenities Section */}
+        <section className="bg-gray-900 text-white py-16">
+          <div className="container mx-auto px-4 md:px-6">
+             <div className="text-center mb-12">
+               <h2 className="font-serif text-3xl font-bold">Everything You Need</h2>
+               <p className="mt-4 text-gray-400">Thoughtfully curated amenities to enhance your stay with us.</p>
+             </div>
+             <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
+               {[
+                 { icon: <Wifi />, name: "Free WiFi" },
+                 { icon: <Truck />, name: "Parking" },
+                 { icon: <Clock className="w-6 h-6" />, name: "24/7 Check-in" },
+                 { icon: <Thermometer />, name: "AC Rooms" },
+                 { icon: <Droplets className="w-6 h-6" />, name: "Hot Water" },
+                 { icon: <Bell />, name: "Room Service" },
+               ].map((amenity) => (
+                 <div key={amenity.name} className="flex flex-col items-center gap-3">
+                   <div className="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center text-red-500 border border-gray-700">
+                     {amenity.icon}
+                   </div>
+                   <span className="text-sm font-semibold tracking-wide">{amenity.name}</span>
+                 </div>
+               ))}
+             </div>
           </div>
         </section>
 
