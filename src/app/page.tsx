@@ -208,30 +208,28 @@ export default async function Home() {
 
       <main className="flex-1">
         {/* Connectivity Section */}
-        <section className="container mx-auto px-4 md:px-6 py-12 border-b border-gray-100">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Location</span>
-              <h2 className="mt-4 font-serif text-3xl sm:text-4xl font-bold text-gray-900">Connectivity & Accessibility</h2>
-              <p className="mt-4 text-gray-600 max-w-lg">Strategically located to keep you connected to major transit routes and destinations in and around Pune.</p>
+        <section className="container mx-auto px-4 md:px-6 py-16 border-b border-gray-100">
+          <div className="text-center mb-12">
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-red-700">Location</span>
+            <h2 className="mt-4 font-serif text-3xl sm:text-4xl font-bold text-gray-900">Connectivity & Accessibility</h2>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">Strategically located to keep you connected to major transit routes and destinations in and around Pune.</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 flex-1 min-w-[200px] text-center">
+              <p className="font-bold text-gray-900">Pune International Airport</p>
+              <p className="text-red-700 font-semibold mt-1">~30 km</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <p className="font-bold text-gray-900">Pune International Airport</p>
-                <p className="text-red-700 font-semibold mt-1">~30 km</p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <p className="font-bold text-gray-900">Pune-Mumbai Expressway</p>
-                <p className="text-red-700 font-semibold mt-1">~5 km</p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <p className="font-bold text-gray-900">Pune-Bengaluru Highway</p>
-                <p className="text-red-700 font-semibold mt-1">~2 km</p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <p className="font-bold text-gray-900">Dehu Road Railway Station</p>
-                <p className="text-red-700 font-semibold mt-1">~1 km</p>
-              </div>
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 flex-1 min-w-[200px] text-center">
+              <p className="font-bold text-gray-900">Pune-Mumbai Expressway</p>
+              <p className="text-red-700 font-semibold mt-1">~5 km</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 flex-1 min-w-[200px] text-center">
+              <p className="font-bold text-gray-900">Pune-Bengaluru Highway</p>
+              <p className="text-red-700 font-semibold mt-1">~2 km</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 flex-1 min-w-[200px] text-center">
+              <p className="font-bold text-gray-900">Dehu Road Railway Station</p>
+              <p className="text-red-700 font-semibold mt-1">~1 km</p>
             </div>
           </div>
         </section>
@@ -246,7 +244,7 @@ export default async function Home() {
             <div className="mx-auto mt-6 h-1 w-16 bg-red-700" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
+          <div className="flex flex-wrap justify-center gap-12 lg:gap-8 max-w-6xl mx-auto">
             {[
               {
                 icon: <MapPin className="w-8 h-8 text-red-700" />,
@@ -284,7 +282,7 @@ export default async function Home() {
                 desc: "A dedicated team committed to making you feel at home with warm, personalized service.",
               },
             ].map((item) => (
-               <div key={item.title} className="flex flex-col items-center text-center group">
+               <div key={item.title} className="flex flex-col items-center text-center group w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm">
                  <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gray-50 border border-gray-100 shadow-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-md">
                    {item.icon}
                  </div>
