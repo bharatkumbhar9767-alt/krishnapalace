@@ -43,6 +43,6 @@ export async function registerUser(formData: FormData) {
     return { success: true };
   } catch (error) {
     console.error("Registration error:", error);
-    return { error: error instanceof Error ? error.message : "An unexpected error occurred. Please try again." };
+    return { error: String(error) };
   }
 }
