@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { updateBookingStatus, getAvailableRooms, createManualBooking } from "./actions";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -263,9 +263,9 @@ export default function BookingClient({ initialBookings }: { initialBookings: Se
                         Check Out
                       </Button>
                     )}
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/admin/bookings/${booking.id}`}>Details</Link>
-                    </Button>
+                    <Link href={`/admin/bookings/${booking.id}`} className={buttonVariants({ variant: "ghost", size: "sm" })}>
+                      Details
+                    </Link>
                   </div>
                 </td>
               </tr>

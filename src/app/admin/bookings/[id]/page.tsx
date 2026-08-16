@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import InvoiceButton from "./InvoiceButton";
 
 export const dynamic = "force-dynamic";
@@ -33,9 +33,9 @@ export default async function BookingDetailsPage({ params }: { params: { id: str
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="outline" asChild>
-            <Link href="/admin/bookings">&larr; Back</Link>
-          </Button>
+          <Link href="/admin/bookings" className={buttonVariants({ variant: "outline" })}>
+            &larr; Back
+          </Link>
           <h1 className="text-3xl font-bold tracking-tight">Booking Details</h1>
         </div>
         <InvoiceButton bookingId={booking.id} />
