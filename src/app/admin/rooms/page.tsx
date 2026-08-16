@@ -9,7 +9,11 @@ async function getRoomData() {
   try {
     const categories = await prisma.roomCategory.findMany({
       include: {
-        rooms: true
+        rooms: {
+          include: {
+            images: true
+          }
+        }
       },
       orderBy: { name: 'asc' }
     });
@@ -38,6 +42,11 @@ export default async function AdminRoomsPage() {
       ...r,
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
+      images: r.images.map(img => ({
+        ...img,
+        createdAt: img.createdAt.toISOString(),
+        updatedAt: img.updatedAt.toISOString(),
+      }))
     }))
   }));
 

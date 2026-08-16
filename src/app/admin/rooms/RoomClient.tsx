@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createRoomCategory, createRoom, updateRoomStatus } from "./actions";
+import { createRoomCategory, createRoom, updateRoomStatus, uploadRoomImage } from "./actions";
+import Image from "next/image";
 
 export default function RoomClient({ initialCategories }: { initialCategories: any[] }) {
   const [categories, setCategories] = useState(initialCategories);
@@ -12,6 +13,7 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
   // UI State for Forms
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showRoomFormFor, setShowRoomFormFor] = useState<string | null>(null);
+  const [uploadingImageFor, setUploadingImageFor] = useState<string | null>(null);
 
   // Form State
   const [newCatName, setNewCatName] = useState("");
@@ -66,6 +68,27 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
     } else {
       alert(result.error);
     }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, roomId: string) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    setUploadingImageFor(roomId);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("roomId", roomId);
+    formData.append("isPrimary", "false");
+
+    const result = await uploadRoomImage(formData);
+    
+    if (result.success) {
+      alert("Image uploaded successfully!");
+      window.location.reload();
+    } else {
+      alert(result.error);
+    }
+    setUploadingImageFor(null);
   };
 
   return (
@@ -161,20 +184,46 @@ export default function RoomClient({ initialCategories }: { initialCategories: a
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {category.rooms.map((room: any) => (
-                      <div key={room.id} className="flex justify-between items-center p-4 border rounded-lg">
-                        <div>
-                          <div className="font-medium text-lg">Room {room.roomNumber}</div>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold mt-1 inline-block ${
-                            room.status === 'AVAILABLE' ? 'bg-green-100 text-green-700' :
-                            room.status === 'OCCUPIED' ? 'bg-blue-100 text-blue-700' :
-                            'bg-yellow-100 text-yellow-700'
-                          }`}>
-                            {room.status}
-                          </span>
+                      <div key={room.id} className="flex flex-col gap-4 p-4 border rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-medium text-lg">Room {room.roomNumber}</div>
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold mt-1 inline-block ${
+                              room.status === 'AVAILABLE' ? 'bg-green-100 text-green-700' :
+                              room.status === 'OCCUPIED' ? 'bg-blue-100 text-blue-700' :
+                              'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {room.status}
+                            </span>
+                          </div>
+                          <Button variant="ghost" size="sm" onClick={() => handleToggleRoomStatus(room.id, room.status)}>
+                            Toggle Status
+                          </Button>
                         </div>
-                        <Button variant="ghost" size="sm" onClick={() => handleToggleRoomStatus(room.id, room.status)}>
-                          Toggle Status
-                        </Button>
+                        
+                        {/* Image Gallery */}
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {room.images?.map((img: any) => (
+                            <div key={img.id} className="relative w-16 h-16 rounded-md overflow-hidden border">
+                              <Image src={img.url} alt={`Room ${room.roomNumber}`} fill className="object-cover" />
+                            </div>
+                          ))}
+                          
+                          <label className="w-16 h-16 flex items-center justify-center border-2 border-dashed rounded-md cursor-pointer hover:bg-muted/50 transition-colors">
+                            {uploadingImageFor === room.id ? (
+                              <span className="text-xs text-muted-foreground animate-pulse">...</span>
+                            ) : (
+                              <span className="text-2xl text-muted-foreground">+</span>
+                            )}
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept="image/*"
+                              onChange={(e) => handleImageUpload(e, room.id)}
+                              disabled={uploadingImageFor === room.id}
+                            />
+                          </label>
+                        </div>
                       </div>
                     ))}
                   </div>
