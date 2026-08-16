@@ -23,19 +23,20 @@ export default async function AdminLayout({
     redirect("/login?callbackUrl=/admin");
   }
 
-  if (session.user.role !== "SUPERADMIN" && session.user.role !== "MANAGER") {
+  if (!["SUPER_ADMIN", "MANAGER", "RECEPTIONIST"].includes(session.user.role)) {
     redirect("/dashboard");
   }
 
+  const role = session.user.role;
   const navItems = [
-    { name: "Dashboard", href: "/admin", icon: <LayoutDashboard className="w-5 h-5 mr-3" /> },
-    { name: "Bookings", href: "/admin/bookings", icon: <CalendarCheck className="w-5 h-5 mr-3" /> },
-    { name: "Rooms", href: "/admin/rooms", icon: <BedDouble className="w-5 h-5 mr-3" /> },
-    { name: "Housekeeping", href: "/admin/housekeeping", icon: <ClipboardList className="w-5 h-5 mr-3" /> },
-    { name: "Staff", href: "/admin/staff", icon: <Users className="w-5 h-5 mr-3" /> },
-    { name: "Reports", href: "/admin/reports", icon: <FileText className="w-5 h-5 mr-3" /> },
-    { name: "CMS & Settings", href: "/admin/cms", icon: <Settings className="w-5 h-5 mr-3" /> },
-  ];
+    { name: "Dashboard", href: "/admin", icon: <LayoutDashboard className="w-5 h-5 mr-3" />, show: true },
+    { name: "Bookings", href: "/admin/bookings", icon: <CalendarCheck className="w-5 h-5 mr-3" />, show: true },
+    { name: "Housekeeping", href: "/admin/housekeeping", icon: <ClipboardList className="w-5 h-5 mr-3" />, show: ["SUPER_ADMIN", "MANAGER", "RECEPTIONIST"].includes(role) },
+    { name: "Rooms", href: "/admin/rooms", icon: <BedDouble className="w-5 h-5 mr-3" />, show: ["SUPER_ADMIN", "MANAGER"].includes(role) },
+    { name: "Reports", href: "/admin/reports", icon: <FileText className="w-5 h-5 mr-3" />, show: ["SUPER_ADMIN", "MANAGER"].includes(role) },
+    { name: "CMS & Settings", href: "/admin/cms", icon: <Settings className="w-5 h-5 mr-3" />, show: ["SUPER_ADMIN", "MANAGER"].includes(role) },
+    { name: "Staff", href: "/admin/staff", icon: <Users className="w-5 h-5 mr-3" />, show: role === "SUPER_ADMIN" },
+  ].filter(item => item.show);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
