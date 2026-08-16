@@ -5,6 +5,7 @@ import { updateBookingStatus, getAvailableRooms, createManualBooking } from "./a
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 type BookingStatus = "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKED_OUT" | "CANCELLED";
 
@@ -262,6 +263,9 @@ export default function BookingClient({ initialBookings }: { initialBookings: Se
                         Check Out
                       </Button>
                     )}
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link href={`/admin/bookings/${booking.id}`}>Details</Link>
+                    </Button>
                   </div>
                 </td>
               </tr>
