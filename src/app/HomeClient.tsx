@@ -38,7 +38,7 @@ const RoomSlider = ({ rooms, fadeInUp }: { rooms: any[], fadeInUp: Variants }) =
         <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col md:flex-row">
           <div className="md:w-1/2 h-72 md:h-auto bg-gray-200 relative overflow-hidden">
              <Image 
-              src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800" 
+              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop" 
               alt={room.name}
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
@@ -115,7 +115,7 @@ export default function HomeClient({ testimonials, featuredRooms }: { testimonia
           transition={{ duration: 1.5, ease: "easeOut" }}
         >
           <Image
-            src="https://images.unsplash.com/photo-1542314831-c53cd4b85d0b?q=80&w=2070&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?q=80&w=2070&auto=format&fit=crop"
             alt="Krishna Palace Hotel Background"
             fill
             className="object-cover opacity-60 mix-blend-overlay"
@@ -347,9 +347,9 @@ export default function HomeClient({ testimonials, featuredRooms }: { testimonia
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { id: 1, title: 'Gatha Mandir', desc: 'A beautiful temple dedicated to Sant Tukaram Maharaj.', img: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=500&q=80' },
-              { id: 2, title: 'Bhandara Dongar', desc: 'The historic hill where Sant Tukaram meditated.', img: 'https://images.unsplash.com/photo-1522206090757-56e6d19e4871?w=500&q=80' },
-              { id: 3, title: 'Indrayani River', desc: 'The sacred river flowing through Dehu.', img: 'https://images.unsplash.com/photo-1582510003544-4d00b7f7415e?w=500&q=80' }
+              { id: 1, title: 'Gatha Mandir', desc: 'A beautiful temple dedicated to Sant Tukaram Maharaj.', img: 'https://images.unsplash.com/photo-1582719478250-c89d145e0e56?w=500&q=80' },
+              { id: 2, title: 'Bhandara Dongar', desc: 'The historic hill where Sant Tukaram meditated.', img: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=500&q=80' },
+              { id: 3, title: 'Indrayani River', desc: 'The sacred river flowing through Dehu.', img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500&q=80' }
             ].map((card, idx) => (
               <motion.div 
                 key={card.id}
