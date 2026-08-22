@@ -269,7 +269,7 @@ class CollectionEmulator {
           }
         }
       }
-      if (insertData['amenities'] === undefined) {
+      if (this.name === 'rooms' && insertData['amenities'] === undefined) {
         insertData['amenities'] = [];
       }
       await Promise.all(fileUploads);
@@ -350,7 +350,7 @@ class CollectionEmulator {
           }
         }
       }
-      if (updateData['amenities'] === undefined) {
+      if (this.name === 'rooms' && updateData['amenities'] === undefined) {
         updateData['amenities'] = [];
       }
       await Promise.all(fileUploads);
