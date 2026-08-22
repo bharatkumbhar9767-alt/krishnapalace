@@ -51,8 +51,9 @@ const CheckoutPage = () => {
 
   const location = useLocation();
 
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
-    const [searchParams] = useSearchParams();
     const fetchRoomAndPricing = async () => {
       // Prevent fetching or erroring if the component is just exiting via AnimatePresence 
       if (!location.pathname.startsWith('/checkout')) return;
