@@ -222,7 +222,7 @@ const HomePage = () => {
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Select Your Stay</h2>
-            <p className="text-muted-foreground text-lg font-medium">Browse rooms & exclusive offers — all in one place.</p>
+            <p className="text-muted-foreground text-lg font-medium">Browse our premium rooms and suites.</p>
           </div>
           {loadingRooms ? (
             <div className="space-y-4">
@@ -237,7 +237,7 @@ const HomePage = () => {
 
       {/* EXCLUSIVE OFFERS */}
         {offers.length > 0 && (
-          <section className="py-24 bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 text-white overflow-hidden relative">
+          <section id="offers" className="py-24 bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 text-white overflow-hidden relative">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
             <div className="container max-w-7xl mx-auto px-4 relative z-10">
               <div className="text-center mb-16">
