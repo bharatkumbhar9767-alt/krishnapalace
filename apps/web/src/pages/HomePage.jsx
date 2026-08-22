@@ -20,206 +20,118 @@ const amenities = [
 ];
 
 // ─── Combined Room + Offer Card ────────────────────────────────────────────
-const RoomOfferSlider = ({ rooms, offers }) => {
+const RoomSlider = ({ rooms }) => {
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
 
-  // Build combined slides: each room card, then each active offer as a special card
-  const roomSlides = rooms.map(r => ({ type: 'room', data: r }));
-  const offerSlides = offers.map(o => ({ type: 'offer', data: o }));
-  const slides = [...roomSlides, ...offerSlides];
-
+  const slides = rooms.map(r => ({ type: 'room', data: r }));
   const prev = () => setIndex(i => (i === 0 ? slides.length - 1 : i - 1));
   const next = () => setIndex(i => (i === slides.length - 1 ? 0 : i + 1));
 
   if (slides.length === 0) return null;
-
   const slide = slides[index];
 
   return (
     <div className="relative w-full">
-      {slides.length > 1 && (
-        <>
-          <button onClick={prev} className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-4 md:-translate-x-6 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button onClick={next} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-4 md:translate-x-6 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border shadow-xl flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200">
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </>
-      )}
+      {/* Navigation Buttons */}
+      <div className="absolute inset-y-0 -left-4 md:-left-12 flex items-center z-10 pointer-events-none">
+        <button onClick={prev} className="pointer-events-auto bg-white/80 hover:bg-white text-primary p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 active:scale-95 border border-primary/10">
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      </div>
+      <div className="absolute inset-y-0 -right-4 md:-right-12 flex items-center z-10 pointer-events-none">
+        <button onClick={next} className="pointer-events-auto bg-white/80 hover:bg-white text-primary p-3 rounded-full shadow-lg backdrop-blur-sm transition-all hover:scale-110 active:scale-95 border border-primary/10">
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
 
-      <div className="w-full px-4 md:px-8">
+      <div className="overflow-hidden rounded-3xl pb-8">
         <AnimatePresence mode="wait">
-          {slide.type === 'room' ? (
-            // ── Normal Room Card ──────────────────────────────────────────
-            <motion.div
-              key={`room-${slide.data.id}`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
-              className="bg-card rounded-3xl border shadow-md overflow-hidden"
-            >
-              {/* Image */}
-              <div
-                className="aspect-video relative bg-muted overflow-hidden cursor-pointer group"
-                onClick={() => navigate(`/room/${slide.data.id}`)}
-              >
-                {(slide.data.images?.length > 0 || slide.data.image) ? (
-                  <img
-                    src={pb.files.getUrl(slide.data, slide.data.images?.[0] || slide.data.image)}
-                    alt={slide.data.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted/50">No Image</div>
-                )}
-                <div className="absolute top-4 right-4 bg-background/95 backdrop-blur-md px-3 py-1.5 rounded-full text-sm font-bold shadow text-primary">
-                  ₹{slide.data.basePrice}/hr
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                  <span className="text-white font-bold text-lg">View Details →</span>
-                </div>
+          <motion.div
+            key={slide.data.id}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.3 }}
+            className="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-border/50 flex flex-col md:flex-row group"
+          >
+            {/* Image */}
+            <div className="w-full md:w-3/5 h-64 md:h-[450px] relative overflow-hidden bg-muted">
+              {slide.data.image ? (
+                <img
+                  src={pb.files.getUrl(slide.data, slide.data.image)}
+                  alt={slide.data.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground"><ImageIcon className="w-12 h-12 opacity-20"/></div>
+              )}
+              
+              <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold shadow-sm flex items-center">
+                <Users className="w-4 h-4 mr-2 text-primary" /> Max {slide.data.capacity} Guests
               </div>
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-2xl font-extrabold text-foreground mb-2">{slide.data.name}</h3>
-                <p className="text-muted-foreground text-sm mb-5 line-clamp-2">
-                  {slide.data.description || 'Experience comfort and convenience in our thoughtfully designed room.'}
-                </p>
-                {slide.data.expand?.amenities?.length > 0 && (
-                  <div className="grid grid-cols-2 gap-2 mb-5">
-                    {slide.data.expand.amenities.slice(0, 4).map(a => (
-                      <div key={a.id} className="flex items-center text-xs text-muted-foreground font-medium">
-                        <span className="w-2 h-2 rounded-full bg-primary mr-2 shrink-0" />
-                        {a.name}
-                      </div>
+            </div>
+
+            {/* Content */}
+            <div className="w-full md:w-2/5 p-8 md:p-10 flex flex-col justify-between">
+              <div>
+                <h3 className="text-3xl font-extrabold mb-3 leading-tight text-foreground">{slide.data.name}</h3>
+                <p className="text-muted-foreground line-clamp-3 mb-6 text-base">{slide.data.description}</p>
+                
+                {slide.data.expand?.amenities && (
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {slide.data.expand.amenities.slice(0, 4).map(am => (
+                      <span key={am.id} className="text-xs font-semibold bg-primary/10 text-primary px-3 py-1.5 rounded-full flex items-center">
+                        <CheckCircle2 className="w-3 h-3 mr-1" /> {am.name}
+                      </span>
                     ))}
-                  </div>
-                )}
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <div>
-                    <span className="text-xs text-muted-foreground">Starting from</span>
-                    <div className="text-2xl font-extrabold text-foreground">₹{slide.data.basePrice}</div>
-                  </div>
-                  <Button
-                    onClick={() => navigate(`/room/${slide.data.id}`)}
-                    className="bg-gradient-to-r from-primary to-teal-600 hover:opacity-90 text-white rounded-xl px-6 font-bold shadow"
-                  >
-                    Book Now <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            // ── Special Offer Card ────────────────────────────────────────
-            <motion.div
-              key={`offer-${slide.data.id}`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
-              className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-primary/30"
-            >
-              {/* Gradient background + image */}
-              <div className="relative aspect-video bg-gradient-to-br from-teal-950 via-teal-800 to-teal-600 overflow-hidden">
-                {slide.data.image && (
-                  <img
-                    src={pb.files.getUrl(slide.data, slide.data.image)}
-                    alt={slide.data.title}
-                    className="w-full h-full object-cover opacity-40"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-teal-950 via-teal-900/60 to-transparent" />
-
-                {/* Badge */}
-                <div className="absolute top-4 left-4 bg-white text-primary text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" /> {slide.data.badge || '🔥 Special Offer'}
-                </div>
-
-                {/* Valid Until */}
-                {slide.data.validTo && (
-                  <div className="absolute top-4 right-4 bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm">
-                    Till {new Date(slide.data.validTo).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                  </div>
-                )}
-
-                {/* Offer Title over image */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-white text-3xl font-extrabold leading-tight mb-1 drop-shadow">{slide.data.title}</h3>
-                  <p className="text-white/80 text-sm font-medium line-clamp-2">{slide.data.description}</p>
-                </div>
-              </div>
-
-              {/* Offer Details */}
-              <div className="bg-gradient-to-br from-teal-950 to-teal-900 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-baseline gap-3 mb-1">
-                    {slide.data.price != null && slide.data.price !== '' && (
-                      <span className="text-4xl font-black text-white">₹{slide.data.price}</span>
-                    )}
-                    {slide.data.discountPercentage != null && slide.data.discountPercentage !== '' && (
-                      <span className="bg-teal-400/20 text-teal-300 text-base font-bold px-2 py-0.5 rounded-lg border border-teal-400/30">
-                        {slide.data.discountPercentage}% OFF
+                    {slide.data.expand.amenities.length > 4 && (
+                      <span className="text-xs font-semibold bg-muted text-muted-foreground px-3 py-1.5 rounded-full flex items-center">
+                        +{slide.data.expand.amenities.length - 4} more
                       </span>
                     )}
                   </div>
-                  <p className="text-teal-300 text-sm font-semibold">Special promotional offer</p>
-                </div>
-                <div className="flex gap-3 w-full sm:w-auto">
-                  <Button
-                    className="flex-1 sm:flex-none bg-white text-teal-900 hover:bg-teal-50 font-extrabold rounded-xl px-6 shadow-xl"
-                    onClick={() => navigate(slide.data.roomId ? /checkout//?type=offer : '/rooms')}
-                  >
-                    Book Now <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-xl border-[hsl(var(--whatsapp))] text-[hsl(var(--whatsapp))] bg-transparent hover:bg-[hsl(var(--whatsapp))/10]"
-                    onClick={() => window.open(`https://wa.me/${WA_NUMBER}?text=Hi!%20I'm%20interested%20in%20${encodeURIComponent(slide.data.title)}.`, '_blank')}
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                  </Button>
-                </div>
+                )}
               </div>
-            </motion.div>
-          )}
+
+              <div className="space-y-5 mt-auto">
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground mb-1">Starting from</p>
+                  <div className="flex items-baseline">
+                    <span className="text-4xl font-black text-primary tracking-tight">₹{slide.data.basePrice}</span>
+                    <span className="text-muted-foreground ml-2 font-medium">/ hour</span>
+                  </div>
+                </div>
+
+                <Button 
+                  className="w-full h-14 text-lg bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 text-white rounded-xl font-bold shadow-lg shadow-primary/25"
+                  onClick={() => navigate(`/room/${slide.data.id}`)}
+                >
+                  Book Now <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* Dot indicators with type labels */}
+      
+      {/* Dots Indicator */}
       {slides.length > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-5 flex-wrap">
+        <div className="flex justify-center gap-2 mt-4">
           {slides.map((s, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
-              title={s.type === 'offer' ? `Offer: ${s.data.title}` : s.data.name}
               className={`rounded-full transition-all duration-300 ${
-                i === index
-                  ? s.type === 'offer' ? 'w-6 h-2.5 bg-teal-500' : 'w-6 h-2.5 bg-primary'
-                  : 'w-2.5 h-2.5 bg-muted-foreground/25 hover:bg-muted-foreground/50'
+                i === index ? 'w-8 h-2.5 bg-primary' : 'w-2.5 h-2.5 bg-muted-foreground/25 hover:bg-muted-foreground/50'
               }`}
             />
           ))}
         </div>
       )}
-
-      {/* Slide type indicator */}
-      <div className="text-center mt-2">
-        <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-          slide.type === 'offer'
-            ? 'bg-teal-100 text-teal-700'
-            : 'bg-primary/10 text-primary'
-        }`}>
-          {slide.type === 'offer' ? '🏷️ Special Offer' : '🏨 Room'} {index + 1} / {slides.length}
-        </span>
-      </div>
     </div>
   );
-};
+}
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -318,12 +230,69 @@ const HomePage = () => {
               <Skeleton className="h-8 w-2/3 mx-auto" />
             </div>
           ) : (
-            <RoomOfferSlider rooms={featuredRooms} offers={offers} />
+            <RoomSlider rooms={featuredRooms} />
           )}
         </div>
       </section>
 
-      {/* AMENITIES */}
+      {/* EXCLUSIVE OFFERS */}
+        {offers.length > 0 && (
+          <section className="py-24 bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 text-white overflow-hidden relative">
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+            <div className="container max-w-7xl mx-auto px-4 relative z-10">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight flex items-center justify-center"><Sparkles className="w-8 h-8 mr-3 text-teal-300" /> Exclusive Offers</h2>
+                <p className="text-teal-100/80 text-lg font-medium">Special packages and limited time deals curated just for you.</p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {offers.map(offer => (
+                  <div key={offer.id} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col group hover:-translate-y-2 transition-transform duration-300">
+                    <div className="relative aspect-video overflow-hidden">
+                      {offer.image ? (
+                        <img src={pb.files.getUrl(offer, offer.image)} alt={offer.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      ) : (
+                        <div className="flex items-center justify-center w-full h-full bg-teal-950/50"><Tag className="w-10 h-10 text-white/30" /></div>
+                      )}
+                      
+                      {offer.badge && (
+                        <div className="absolute top-4 left-4 bg-teal-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg">
+                          {offer.badge}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="p-8 flex flex-col flex-grow">
+                      <h3 className="text-2xl font-bold mb-3">{offer.title}</h3>
+                      <p className="text-teal-100/70 text-sm mb-6 flex-grow">{offer.description}</p>
+                      
+                      <div className="flex items-end justify-between mt-auto pt-6 border-t border-white/10">
+                        <div>
+                          {offer.originalPrice && <span className="text-teal-100/50 line-through text-sm block mb-1">₹{offer.originalPrice}</span>}
+                          {offer.price && <span className="text-3xl font-black text-teal-300">₹{offer.price}</span>}
+                        </div>
+                        <Button 
+                          className="bg-white text-teal-900 hover:bg-teal-50 font-bold rounded-xl px-6"
+                          onClick={() => {
+                            if (offer.roomId) {
+                              navigate(`/checkout/${offer.roomId}/${offer.id}?type=offer`);
+                            } else {
+                              navigate('/rooms');
+                            }
+                          }}
+                        >
+                          Book Now
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* AMENITIES */}
       <section className="py-24 bg-muted/30">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">

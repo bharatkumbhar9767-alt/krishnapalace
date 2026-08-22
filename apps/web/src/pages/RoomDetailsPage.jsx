@@ -40,10 +40,20 @@ const RoomDetailsPage = () => {
           durationOrder.indexOf(a.duration) - durationOrder.indexOf(b.duration)
         );
         
-        // Add a virtual "Couple Offer" pricing item if not already in DB
-        if (!sortedPricing.find(p => p.duration === 'Couple Offer')) {
-          sortedPricing.push({ id: 'virtual-couple-offer', duration: 'Couple Offer', price: 999 });
-        }
+        // Fetch linked offers for this room
+        const offersData = await pb.collection('offers').getFullList({
+          filter: `roomId="${roomId}" && active=true`,
+          $autoCancel: false
+        });
+        
+        offersData.forEach(offer => {
+          sortedPricing.push({
+            id: offer.id,
+            duration: offer.title,
+            price: offer.price || roomData.basePrice,
+            isOffer: true
+          });
+        });
         
         setPricing(sortedPricing);
       } catch (err) {
@@ -65,7 +75,12 @@ const RoomDetailsPage = () => {
       toast.error("Room details missing. Please refresh the page.");
       return;
     }
-    navigate(`/checkout/${room.id}/${encodeURIComponent(selectedDuration)}`);
+    const activePricingForNav = pricing.find(p => p.duration === selectedDuration);
+    if (activePricingForNav?.isOffer) {
+      navigate(`/checkout/${room.id}/${encodeURIComponent(activePricingForNav.id)}?type=offer`);
+    } else {
+      navigate(`/checkout/${room.id}/${encodeURIComponent(selectedDuration)}`);
+    }
   };
 
   if (loading) {
@@ -177,7 +192,7 @@ const RoomDetailsPage = () => {
                       {pricing.length > 0 ? (
                         pricing.map(p => (
                           <SelectItem key={p.id} value={p.duration} className="text-base py-3">
-                            {p.duration} - ₹{p.price}
+                            {p.isOffer ? "🎉 Special Offer: " : ""}{p.duration} - ₹{p.price}
                           </SelectItem>
                         ))
                       ) : (
