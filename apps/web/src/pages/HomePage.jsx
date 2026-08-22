@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Wifi, CarFront, Clock, Wind, Droplets, Utensils, MessageCircle, ChevronLeft, ChevronRight, Tag, ArrowRight, Sparkles } from 'lucide-react';
+import { Wifi, CarFront, Clock, Wind, Droplets, Utensils, MessageCircle, ChevronLeft, ChevronRight, Tag, ArrowRight, Sparkles, Users, CheckCircle2, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import pb from '@/lib/pocketbaseClient';
 import { Skeleton } from '@/components/ui/skeleton';
