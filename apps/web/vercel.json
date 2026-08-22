@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "outputDirectory": "../../dist/apps/web",
+  "rewrites": [
+    {
+      "source": "/(css|js|assets|img|fonts|favicon.ico|manifest.json)/(.*)",
+      "destination": "/$1/$2"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

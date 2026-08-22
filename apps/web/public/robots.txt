@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://krishnapalace.online/sitemap.xml

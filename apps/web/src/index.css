@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Teal Primary */
+    --primary: 180 100% 25%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Blue Secondary */
+    --secondary: 217 32% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Green Accent */
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Correct WhatsApp Green (Standard #25D366 is 142 71% 45%) */
+    --whatsapp: 142 71% 45%;
+    --whatsapp-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 180 100% 25%;
+
+    --radius: 1rem;
+
+    /* Admin specific tokens */
+    --admin-bg: 210 40% 98%;
+    --admin-card: 0 0% 100%;
+    --admin-border: 214 32% 91%;
+    --admin-input: 214 32% 91%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 180 100% 35%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 32% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --whatsapp: 142 71% 45%;
+    --whatsapp-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 180 100% 35%;
+
+    /* Admin specific tokens */
+    --admin-bg: 217 32% 12%;
+    --admin-card: 217 32% 15%;
+    --admin-border: 217 32% 20%;
+    --admin-input: 217 32% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .zoomHover {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .zoomHover:hover {
+    transform: scale(1.05);
+  }
+  .card-hover-effect {
+    transition: all 0.3s ease;
+  }
+  .card-hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(94, 234, 212, 0.4);
+  }
+}
