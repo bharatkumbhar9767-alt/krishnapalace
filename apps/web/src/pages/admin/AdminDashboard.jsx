@@ -154,7 +154,6 @@ const OffersTab = () => {
           <h2 className="text-2xl font-bold text-secondary">Manage Offers</h2>
           <p className="text-muted-foreground text-sm">
             Create special deals shown in the Home &amp; Rooms page slider.
-            <span className="ml-2 text-amber-600 font-semibold">⚠️ PocketBase needs: image (File) &amp; price (Number) fields added manually.</span>
           </p>
         </div>
         <Button onClick={openAdd} className="bg-primary hover:bg-primary/90 text-white shadow-sm">
