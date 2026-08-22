@@ -170,7 +170,7 @@ const RoomOfferSlider = ({ rooms, offers }) => {
                 <div className="flex gap-3 w-full sm:w-auto">
                   <Button
                     className="flex-1 sm:flex-none bg-white text-teal-900 hover:bg-teal-50 font-extrabold rounded-xl px-6 shadow-xl"
-                    onClick={() => navigate('/rooms')}
+                    onClick={() => navigate(slide.data.roomId ? /checkout//?type=offer : '/rooms')}
                   >
                     Book Now <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>

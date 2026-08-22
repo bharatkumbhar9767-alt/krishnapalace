@@ -20,6 +20,7 @@ const emptyForm = {
 
 const OffersTab = () => {
   const [offers, setOffers] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -28,7 +29,13 @@ const OffersTab = () => {
   const [existingImage, setExistingImage] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  const fetchOffers = async () => {
+  const fetchRooms = async () => {
+      try {
+        const res = await pb.collection('rooms').getFullList({$autoCancel: false});
+        setRooms(res);
+      } catch (e) {}
+    };
+    const fetchOffers = async () => {
     try {
       const records = await pb.collection('offers').getFullList({ sort: '-created', $autoCancel: false });
       setOffers(records);
@@ -99,6 +106,7 @@ const OffersTab = () => {
       data.append('badge', form.badge);
       data.append('active', form.active);
       if (form.validUntil) data.append('validUntil', form.validUntil);
+        if (form.roomId) data.append('roomId', form.roomId);
       if (imageFile) data.append('image', imageFile);
 
       if (editing) {

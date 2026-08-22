@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import pb from '@/lib/pocketbaseClient';
 import { useAuth } from '@/contexts/AuthContext.jsx';
@@ -23,6 +23,8 @@ const CheckoutPage = () => {
   const [room, setRoom] = useState(null);
   const [basePrice, setBasePrice] = useState(0);
   const [withBreakfast, setWithBreakfast] = useState(false);
+  const [displayDuration, setDisplayDuration] = useState(decodeURIComponent(hours || '1 Hour'));
+  const [offerDetails, setOfferDetails] = useState(null);
   
   const BREAKFAST_FEE = 200;
   const COUPLE_OFFER_PRICE = 999;
@@ -50,6 +52,7 @@ const CheckoutPage = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const [searchParams] = useSearchParams();
     const fetchRoomAndPricing = async () => {
       // Prevent fetching or erroring if the component is just exiting via AnimatePresence 
       if (!location.pathname.startsWith('/checkout')) return;
@@ -68,7 +71,7 @@ const CheckoutPage = () => {
 
         const pricingData = await pb.collection('room_pricing').getFullList({ filter: `roomId="${roomId}"`, $autoCancel: false });
         
-        if (decodedHours === 'Couple Offer') {
+        if ((displayDuration === 'Couple Offer' || offerDetails)) {
           setBasePrice(COUPLE_OFFER_PRICE);
         } else {
           const matchingPrice = pricingData.find(p => p.duration === decodedHours);
@@ -115,7 +118,7 @@ const CheckoutPage = () => {
         guestName: formData.name,
         guestPhone: formData.phone,
         checkInDate: combinedDateTime,
-        duration: decodedHours,
+        duration: displayDuration,
         numberOfGuests: parseInt(formData.guests, 10),
         status: 'Pending',
         totalPrice: basePrice + (withBreakfast ? BREAKFAST_FEE : 0),
@@ -174,7 +177,7 @@ const CheckoutPage = () => {
                   <div className="flex items-center justify-center w-full h-full text-muted-foreground">No Image</div>
                 )}
                 <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold shadow-sm flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-primary" /> {decodedHours}
+                  <Clock className="w-4 h-4 mr-2 text-primary" /> {displayDuration}
                 </div>
               </div>
               
@@ -197,7 +200,7 @@ const CheckoutPage = () => {
                 <div className="space-y-3 text-sm border-t pt-6">
                   <div className="flex justify-between text-muted-foreground">
                     <span className="font-medium">Selected Duration</span>
-                    <span className="font-bold text-foreground">{decodedHours}</span>
+                    <span className="font-bold text-foreground">{displayDuration}</span>
                   </div>
                   
                   {withBreakfast && (
@@ -280,7 +283,7 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
-                {decodedHours === 'Couple Offer' && (
+                {(displayDuration === 'Couple Offer' || offerDetails) && (
                    <div className="sm:col-span-2 p-5 rounded-2xl border-2 border-orange-500/20 bg-orange-500/5">
                       <h4 className="text-orange-600 font-bold flex items-center mb-1">
                         <Sparkles className="w-4 h-4 mr-2" /> Special Couple Bundle Active
